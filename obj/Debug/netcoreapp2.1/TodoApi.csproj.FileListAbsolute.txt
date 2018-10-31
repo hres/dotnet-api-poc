@@ -1,0 +1,14 @@
+/home/alex/dev/TodoApi/bin/Debug/netcoreapp2.1/TodoApi.deps.json
+/home/alex/dev/TodoApi/bin/Debug/netcoreapp2.1/TodoApi.runtimeconfig.json
+/home/alex/dev/TodoApi/bin/Debug/netcoreapp2.1/TodoApi.runtimeconfig.dev.json
+/home/alex/dev/TodoApi/bin/Debug/netcoreapp2.1/TodoApi.dll
+/home/alex/dev/TodoApi/bin/Debug/netcoreapp2.1/TodoApi.pdb
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.csprojAssemblyReference.cache
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.csproj.CoreCompileInputs.cache
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.RazorAssemblyInfo.cache
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.RazorAssemblyInfo.cs
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.AssemblyInfoInputs.cache
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.AssemblyInfo.cs
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.RazorTargetAssemblyInfo.cache
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.dll
+/home/alex/dev/TodoApi/obj/Debug/netcoreapp2.1/TodoApi.pdb
