@@ -1,9 +1,9 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TodoApi.Models;
+using TodoApi.Models.Todo;
 
-namespace TodoApi.Controllers
+namespace TodoApi.Controller
 {
   [Produces("application/json", "application/xml")]
   [Route("api/[controller]")]
