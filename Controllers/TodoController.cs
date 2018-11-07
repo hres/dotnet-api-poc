@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models.Todo;
 using TodoApi.Models.Response;
+using TodoApi.Models.LNHPD;
+using Oracle.ManagedDataAccess.Client;
+using System;
+using System.Data;
+using System.Configuration;
 
 namespace TodoApi.Controller
 {
@@ -29,17 +34,6 @@ namespace TodoApi.Controller
     {
       var response = new Response<List<TodoItem>> { data = _context.TodoItems.ToList() };
       return response;
-    }
-
-    [HttpGet("{id}", Name = "GetTodo")]
-    public ActionResult<TodoItem> GetById(long id)
-    {
-      var item = _context.TodoItems.Find(id);
-      if (item == null)
-      {
-        return NotFound();
-      }
-      return item;
     }
   }
 }
