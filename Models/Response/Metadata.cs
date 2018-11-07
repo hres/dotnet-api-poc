@@ -1,4 +1,4 @@
-namespace TodoApi.Models
+namespace TodoApi.Models.Response
 {
   public class Metadata
   {

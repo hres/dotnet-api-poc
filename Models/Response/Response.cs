@@ -1,8 +1,8 @@
-namespace TodoApi.Models
+namespace TodoApi.Models.Response
 {
   public class Response<T>
   {
-    private Metadata metadata { get; set; }
-    private T data { get; set; }
+    public Metadata metadata { get; set; }
+    public T data { get; set; }
   }
 }

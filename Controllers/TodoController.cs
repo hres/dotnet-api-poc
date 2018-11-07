@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
 using TodoApi.Models.Todo;
+using TodoApi.Models.Response;
 
 namespace TodoApi.Controller
 {
@@ -18,15 +19,16 @@ namespace TodoApi.Controller
 
       if (_context.TodoItems.Count() == 0)
       {
-        _context.TodoItems.Add(new TodoItem { Name = "Item1" });
+        _context.TodoItems.Add(new TodoItem());
         _context.SaveChanges();
       }
     }
 
     [HttpGet]
-    public ActionResult<List<TodoItem>> GetAll()
+    public ActionResult<Response<List<TodoItem>>> GetAll()
     {
-      return _context.TodoItems.ToList();
+      var response = new Response<List<TodoItem>> { data = _context.TodoItems.ToList() };
+      return response;
     }
 
     [HttpGet("{id}", Name = "GetTodo")]
