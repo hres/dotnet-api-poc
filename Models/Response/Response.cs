@@ -1,4 +1,4 @@
-namespace TodoApi.Models.Response
+namespace LnhpdApi.Models.Response
 {
   public class Response<T>
   {

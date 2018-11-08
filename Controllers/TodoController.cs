@@ -1,15 +1,15 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using TodoApi.Models.Todo;
-using TodoApi.Models.Response;
-using TodoApi.Models.LNHPD;
+using LnhpdApi.Models.Todo;
+using LnhpdApi.Models.Response;
+using LnhpdApi.Models.LNHPD;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;
 using System.Configuration;
 
-namespace TodoApi.Controller
+namespace LnhpdApi.Controller
 {
   [Produces("application/json", "application/xml")]
   [Route("api/[controller]")]

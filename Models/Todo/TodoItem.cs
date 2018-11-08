@@ -1,7 +1,7 @@
 using System;
 using System.Collections;
 
-namespace TodoApi.Models.Todo
+namespace LnhpdApi.Models.Todo
 {
   public class TodoItem
   {

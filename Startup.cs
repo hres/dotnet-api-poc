@@ -3,9 +3,9 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
-using TodoApi.Models.Todo;
+using LnhpdApi.Models.Todo;
 
-namespace TodoApi
+namespace LnhpdApi
 {
   public class Startup
   {
