@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -25,7 +26,9 @@ namespace LnhpdApi.Models.LNHPD
     public string dhe_unit_of_measure { get; set; }
     public string extract_type_desc { get; set; }
     public string source_material { get; set; }
+    public MultilingualField languages { get; set; } = new MultilingualField { { "en", "alex" } };
     //public string brand_name { get; set; }
   }
+
 
 }

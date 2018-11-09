@@ -1,54 +1,45 @@
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Linq;
-using LnhpdApi.Models.Todo;
-using LnhpdApi.Models.Response;
-using LnhpdApi.Models.LNHPD;
-using Oracle.ManagedDataAccess.Client;
 using System;
-using System.Data;
+using System.Collections.Generic;
 using System.Configuration;
-using Microsoft.Extensions.Configuration;
+using System.Data;
+using LnhpdApi.Models.Request;
+using LnhpdApi.Models.Response;
+using Microsoft.EntityFrameworkCore;
+using Oracle.ManagedDataAccess.Client;
 
-namespace LnhpdApi.Controller
+namespace LnhpdApi.Models.LNHPD
 {
-  [Produces("application/json", "application/xml")]
-  [Route("api/medical-ingredient")]
-  [Route("api/ingredient-medicale")]
-  [ApiController]
-  public class MedicalIngredientController : ControllerBase
+  public class MedicinalIngredientContext : AbstractRepository<MedicinalIngredient>
   {
-    // TODO: replace with MedicinalIngredientContext when ready
-    // private readonly TodoContext _context;
 
-    public MedicalIngredientController()
+    public override IEnumerable<MedicinalIngredient> GetAll(int limit, int offset, int page, string lang)
     {
-      // _context = context;
-
-      // if (_context.TodoItems.Count() == 0)
-      // {
-      //   _context.TodoItems.Add(new TodoItem());
-      //   _context.SaveChanges();
-      // }
+      throw new System.NotImplementedException();
     }
 
-    [HttpGet("{id}")]
-    public ActionResult<Response<MedicinalIngredient>> GetMedicinalIngredientById(int id, string lang = "en")
+    public override MedicinalIngredient GetOne(int id, string lang)
+    {
+      throw new System.NotImplementedException();
+    }
+
+    public Response<MedicinalIngredient> GetMedicinalIngredientById(int id, string lang = "en")
     {
       var query = getQueryColumns(lang) + getQueryTable();
       query = query + $"and i.submission_id = {idCal(id)}";
-      Console.WriteLine(query);
       MedicinalIngredient item = executeOne(query);
-      if (item == null) return NotFound();
+      if (item == null) return null;
       return new Response<MedicinalIngredient> { data = item };
     }
 
-    [HttpGet]
-    public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int offset, int page, string lang = "en")
+    public Response<List<MedicinalIngredient>> GetAllMedicinalIngredient(RequestInfo requestInfo)
     {
-      var limit = 5;
+      var limit = requestInfo.limit;
+      var page = requestInfo.page;
+      var offset = requestInfo.offset;
       var start = 0;
       var stop = 0;
+
+      var lang = requestInfo.languages[0];
 
       if (page != null && page >= 1)
       {
@@ -88,7 +79,7 @@ namespace LnhpdApi.Controller
       response.metadata = new Metadata();
       var pagination = new Pagination();
       pagination.limit = limit;
-      pagination.offset = offset;
+      pagination.offset = (page != null && page == 0 ? offset : 0);
       pagination.page = page;
       pagination.count = result.count;
 
@@ -255,6 +246,8 @@ namespace LnhpdApi.Controller
       item.extract_type_desc = reader["extract_type_desc"] == DBNull.Value ? string.Empty : reader["extract_type_desc"].ToString().Trim();
       item.source_material = reader["source_material"] == DBNull.Value ? string.Empty : reader["source_material"].ToString().Trim();
       return item;
+
     }
+
   }
 }

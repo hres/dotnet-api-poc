@@ -4,6 +4,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using LnhpdApi.Models.Todo;
+using LnhpdApi.Models.LNHPD;
 
 namespace LnhpdApi
 {
@@ -12,6 +13,8 @@ namespace LnhpdApi
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
+      // services.AddDbContext<MedicinalIngredientContext>(opt => opt.UseInMemoryDatabase("MedicinalIngredientList"));
+
       services
       .AddMvc()
       .AddXmlSerializerFormatters()
