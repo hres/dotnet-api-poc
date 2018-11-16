@@ -27,7 +27,8 @@ namespace LnhpdApi.Models.LNHPD
     public string extract_type_desc { get; set; }
     public string source_material { get; set; }
     //public string brand_name { get; set; }
-    public Dictionary<string, string> languages { get; set; } = new Dictionary<string, string> { { "en", "alex" }, { "fr", "thing" } };
+    // public Dictionary<string, string> languages { get; set; } = new Dictionary<string, string> { { "en", "alex" }, { "fr", "thing" } };
+    public BilingualField<string> languages { get; set; } = new BilingualField<string> { en = "alex", fr = "thing" };
   }
 
 
