@@ -9,6 +9,7 @@ using System;
 using System.Data;
 using System.Configuration;
 using Microsoft.Extensions.Configuration;
+using LnhpdApi.Models.Request;
 
 namespace LnhpdApi.Controller
 {
@@ -32,7 +33,7 @@ namespace LnhpdApi.Controller
     [HttpGet]
     public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int offset, int page, string lang = "en")
     {
-      return _context.GetAllMedicinalIngredient(new Models.Request.RequestInfo { offset = offset, page = page });
+      return _context.GetAllMedicinalIngredient(new RequestInfo { offset = offset, page = page, context = HttpContext });
     }
   }
 }
