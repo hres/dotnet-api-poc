@@ -26,8 +26,8 @@ namespace LnhpdApi.Models.LNHPD
     public string dhe_unit_of_measure { get; set; }
     public string extract_type_desc { get; set; }
     public string source_material { get; set; }
-    public MultilingualField languages { get; set; } = new MultilingualField { { "en", "alex" } };
     //public string brand_name { get; set; }
+    public Dictionary<string, string> languages { get; set; } = new Dictionary<string, string> { { "en", "alex" }, { "fr", "thing" } };
   }
 
 
