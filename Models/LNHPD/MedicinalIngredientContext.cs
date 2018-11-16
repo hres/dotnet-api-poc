@@ -83,6 +83,26 @@ namespace LnhpdApi.Models.LNHPD
       pagination.page = page;
       pagination.count = result.count;
 
+      /**
+        Will need to pass the URL object from the context through to here to be able to build up the next/previous URLs. Cycle through the query parameters and check for current requests page/offset (page is dominant), and then build the URL back up from pieces with the new page/offset
+       */
+      if (start + limit < result.count)
+      {
+        pagination.next = $"";
+      }
+
+      if (start > 0)
+      {
+        if (start - limit > 0)
+        {
+          pagination.previous = $"api/";
+        }
+        else
+        {
+          pagination.previous = $"api/medicinal-ingredients/";
+        }
+      }
+
       response.metadata.pagination = pagination;
 
       return response;
