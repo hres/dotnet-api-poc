@@ -13,7 +13,6 @@ namespace LnhpdApi
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
-      // services.AddDbContext<MedicinalIngredientContext>(opt => opt.UseInMemoryDatabase("MedicinalIngredientList"));
 
       services
       .AddMvc()
