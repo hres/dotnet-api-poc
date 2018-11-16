@@ -6,7 +6,7 @@ using Oracle.ManagedDataAccess.Client;
 
 namespace LnhpdApi.Models
 {
-  public class MultilingualField : Dictionary<string, string>, IXmlSerializable
+  public class MultilingualField<T> : Dictionary<string, T>, IXmlSerializable
   {
 
     XmlSchema IXmlSerializable.GetSchema() { return null; }
