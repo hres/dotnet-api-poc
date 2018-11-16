@@ -8,6 +8,5 @@ namespace LnhpdApi.Models.Request
     public int offset { get; set; }
     public int page { get; set; }
     public string[] languages { get; set; } = { "en", "fr" };
-
   }
 }

@@ -17,14 +17,14 @@ The APIs must:
   - represent entities via a unique URL
   - use HATEOAS to provide additional identifying information to clients on consuming data
 - use utf-8 encoding and ISO-8601 datetimes
-- responses should be well defined
-  - (provide a point of contact)
+- responses should be well defined:
+  - (provide a point of contact in metadata)
   - structured responses limiting server generated additional fields (allowance for fields to be filtered, though)
   - avoid raw data structures, provide abstractions over them
-  - prefer non-relational data structures
+  - prefer compositional rather than relational data structures
   - avoid generic placeholder keys
   - standardize error codes and conform to well-known HTTP status codes
-  - do not divulge server output such as runtime errors or stack dumps
+  - do not divulge server output such as logs or runtime errors
   - all interactions with client should be stateless
     - issues related to sessions such as rate limiting and access will be handled at a higher level
 - have language specific data condensed into a map with a representative name, with language codes (`en`, `fr`) as keys defining the language specific data
@@ -41,8 +41,8 @@ The APIs must:
   - measure and publish test results
 - sanitize requests
   - prevent common attack vectors like SQL injection or regex explosion by restricting wildcards and validating user input
-- use versioning when implementing/deprecat functionality
-- API should be well documented and bilingual, preferably using OpenAPI specification generating tools
+- use versioning when implementing/deprecating functionality
+- API should be well documented and bilingual using OpenAPI specification, possibly with generating tools
 - provide point of contact and SLA in documentation
 - issues related to IP filtering, authentication, rate-limiting, throttling, etc. should be handle at a higher level
 
@@ -65,7 +65,7 @@ NOTE: page and offset are mutually exclusive, with page taking precedence
 ## TODO
 
 - [ ] manage languages for unilingual endpoints, Accept header, and possibly 'lang' query or a path parameter
-- [ ] manage mime type for Accept header, and possibly with 'type' query param (support XML out of the box)
+- [ ] manage content type for Accept header, and possibly with 'type' query param (support XML out of the box)
 - [ ] next/previous in paginated response
 - [ ] consume GET request body for parameters, and merge with query parameters and defaults
 - [ ] allow for field filtering
