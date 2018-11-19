@@ -72,8 +72,6 @@ namespace LnhpdApi.Models.LNHPD
 
       var result = executeMany(query, countQuery);
 
-      Console.WriteLine(result.count);
-
       var response = new Response<List<MedicinalIngredient>> { data = result.data };
 
       response.metadata = new Metadata();
@@ -83,9 +81,15 @@ namespace LnhpdApi.Models.LNHPD
       pagination.page = page;
       pagination.count = result.count;
 
-      /**
-        Will need to pass the URL object from the context through to here to be able to build up the next/previous URLs. Cycle through the query parameters and check for current requests page/offset (page is dominant), and then build the URL back up from pieces with the new page/offset
-       */
+      var request = requestInfo.context.Request;
+      var queryParams = request.Query;
+      var hateoas = request.PathBase;
+
+      Console.WriteLine(queryParams.ToString());
+      Console.WriteLine(request.QueryString);
+
+
+
       if (start + limit < result.count)
       {
         pagination.next = $"";

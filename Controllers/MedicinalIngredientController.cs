@@ -31,9 +31,9 @@ namespace LnhpdApi.Controller
     }
 
     [HttpGet]
-    public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int offset, int page, string lang = "en")
+    public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int limit, int offset, int page, string lang = "en")
     {
-      return _context.GetAllMedicinalIngredient(new RequestInfo { offset = offset, page = page, context = HttpContext });
+      return _context.GetAllMedicinalIngredient(new RequestInfo { limit = limit, offset = offset, page = page, context = HttpContext });
     }
   }
 }
