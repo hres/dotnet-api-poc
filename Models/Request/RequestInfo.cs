@@ -28,15 +28,24 @@ namespace LnhpdApi.Models.Request
       }
     }
 
-    private int? _page;
-    public Nullable<int> page
-    {
-      get => _page;
-      set => _page = value ?? 1;
-    }
+    public Nullable<int> page { get; set; }
 
-    public HttpContext context { get; set; }
+    public string sort { get; set; }
+
 
     public string[] languages { get; set; }
+
+    public string type { get; set; }
+
+    public string path
+    {
+      get => context.Request.Path;
+    }
+
+    public string basePath
+    {
+      get => context.Request.PathBase;
+    }
+    public HttpContext context { get; set; }
   }
 }

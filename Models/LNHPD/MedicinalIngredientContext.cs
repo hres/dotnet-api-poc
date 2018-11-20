@@ -33,79 +33,10 @@ namespace LnhpdApi.Models.LNHPD
 
     public Response<List<MedicinalIngredient>> GetAllMedicinalIngredient(RequestInfo requestInfo)
     {
-      /**
-        1.!-- get count
-        2.!-- create page object
-        3.!-- create start/stop points for db query
-        4.!-- if outside of range, throw error
-      **/
-
-
-      var limit = (int)requestInfo.limit;
-      var page = (int)requestInfo.page;
-      var start = 0;
-      var stop = 0;
-
-      var lang = "en";
-
-      start = (page - 1) * limit;
-      stop = start + limit;
-
-      var query = getQueryColumns(lang) + getQueryTable();
-      query = "select " +
-        (start != 0 ? "sq." : "") + "*" +
-        (start != 0 ? ", rownum as rnum " : " ") +
-        "from (" + query + ") " +
-        (start != 0 ? "sq " : "") + "where rownum <= " + stop;
-
-      if (start != 0)
-      {
-        query = "select * from (" + query + ") where rnum > " + start;
-      }
-
-      var countQuery = "select count(*) " + getQueryTable();
-
-      var result = executeMany(query, countQuery);
-
-      var response = new Response<List<MedicinalIngredient>> { data = result.data };
-
-      response.metadata = new Metadata();
-      var pagination = new Pagination();
-      pagination.limit = limit;
-      pagination.page = page;
-      pagination.total = result.count;
-
-      var request = requestInfo.context.Request;
-      var queryParams = request.Query;
-      var hateoas = request.PathBase;
-
-      Console.WriteLine(queryParams.ToString());
-      Console.WriteLine(request.QueryString);
-
-
-
-      if (start + limit < result.count)
-      {
-        pagination.next = $"";
-      }
-
-      if (start > 0)
-      {
-        if (start - limit > 0)
-        {
-          pagination.previous = $"api/";
-        }
-        else
-        {
-          pagination.previous = $"api/medicinal-ingredients/";
-        }
-      }
-
-      response.metadata.pagination = pagination;
-
-      return response;
+      return executeMany(requestInfo);
 
     }
+
 
     private int getPageSize(int count)
     {
@@ -168,6 +99,122 @@ namespace LnhpdApi.Models.LNHPD
       query += " left join nhpplq_owner.ingredient_source_online s on i.matrix_id = s.matrix_id";
       query += " where i.matrix_type_code=2 ";
       return query;
+    }
+
+    private Response<List<MedicinalIngredient>> executeMany(RequestInfo requestInfo)
+    {
+      var items = new List<MedicinalIngredient>();
+      int count = 0;
+
+      using (OracleConnection con = new OracleConnection(LnhpdDBConnection))
+      {
+        try
+        {
+          con.Open();
+          var countQuery = "select count(*) " + getQueryTable();
+          OracleCommand cmd = new OracleCommand(countQuery, con);
+          using (OracleDataReader dr = cmd.ExecuteReader())
+          {
+            if (dr.HasRows)
+            {
+              dr.Read();
+              count = dr.GetInt32(0);
+            }
+          }
+
+          // may want to move this to a incoming filter for speed
+          var _limit = requestInfo.limit;
+
+          if (_limit != null)
+          {
+            if (_limit > Config.MAX_PAGE_LIMIT || _limit < 1)
+            {
+              if (Config.THROW_ON_INVALID_LIMIT) throw new Exception();
+              else _limit = Config.DEFAULT_PAGE_LIMIT;
+            }
+          }
+          else _limit = Config.DEFAULT_PAGE_LIMIT;
+
+          var limit = (int)_limit;
+          var page = requestInfo.page ?? 1;
+          var start = 0;
+          var stop = 0;
+
+          start = (page - 1) * (int)limit;
+
+          // check for invalid page
+          if (start >= count || page < 1)
+          {
+            Console.WriteLine("INVALID PAGE");
+            throw new Exception();
+          }
+
+          // shorten the limit if it's the last page
+          if (start + limit > count)
+          {
+            Console.WriteLine("LAST PAGE");
+            limit = count - start;
+          }
+
+          stop = start + limit;
+
+          Console.WriteLine(start + ", " + stop + ", " + limit + ", " + count);
+
+
+          var lang = "en";
+          var query = getQueryColumns(lang) + getQueryTable();
+          query = "select " +
+            (start != 0 ? "sq." : "") + "*" +
+            (start != 0 ? ", rownum as rnum " : " ") +
+            "from (" + query + ") " +
+            (start != 0 ? "sq " : "") + "where rownum <= " + stop;
+
+          if (start != 0)
+          {
+            query = "select * from (" + query + ") where rnum > " + start;
+          }
+
+          cmd = new OracleCommand(query, con);
+          using (OracleDataReader dr = cmd.ExecuteReader())
+          {
+            if (dr.HasRows)
+            {
+              while (dr.Read())
+              {
+                items.Add(MedicinalIngredientFactory(dr));
+              }
+            }
+          }
+
+          var response = new Response<List<MedicinalIngredient>> { data = items };
+
+          response.metadata = new Metadata();
+          var pagination = new Pagination();
+          pagination.limit = limit;
+          pagination.page = page;
+          pagination.total = count;
+
+          var request = requestInfo.context.Request;
+          var queryParams = request.Query;
+          var hateoas = request.PathBase;
+
+          response.metadata.pagination = pagination;
+
+          return response;
+        }
+        catch (Exception ex)
+        {
+          string errorMessages = string.Format("DbConnection.cs - GetAllIngredient()");
+          Console.WriteLine(ex.Message);
+          // ExceptionHelper.LogException(ex, errorMessages);
+        }
+        finally
+        {
+          if (con.State == ConnectionState.Open)
+            con.Close();
+        }
+      }
+      return null;
     }
 
     private (List<MedicinalIngredient> data, int count) executeMany(string query, string countQuery)
