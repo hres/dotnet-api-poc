@@ -33,27 +33,22 @@ namespace LnhpdApi.Models.LNHPD
 
     public Response<List<MedicinalIngredient>> GetAllMedicinalIngredient(RequestInfo requestInfo)
     {
-      var limit = requestInfo.limit;
-      var page = requestInfo.page;
-      var offset = requestInfo.offset;
+      /**
+        1.!-- get count
+        2.!-- create page object
+        3.!-- create start/stop points for db query
+        4.!-- if outside of range, throw error
+      **/
+
+
+      var limit = (int)requestInfo.limit;
+      var page = (int)requestInfo.page;
       var start = 0;
       var stop = 0;
 
-      var lang = requestInfo.languages[0];
+      var lang = "en";
 
-      if (page != null && page >= 1)
-      {
-        start = (page - 1) * limit;
-      }
-      else if (offset != null)
-      {
-        start = offset;
-      }
-      else
-      {
-        start = 0;
-      }
-
+      start = (page - 1) * limit;
       stop = start + limit;
 
       var query = getQueryColumns(lang) + getQueryTable();
@@ -77,9 +72,8 @@ namespace LnhpdApi.Models.LNHPD
       response.metadata = new Metadata();
       var pagination = new Pagination();
       pagination.limit = limit;
-      pagination.offset = (page != null && page == 0 ? offset : 0);
       pagination.page = page;
-      pagination.count = result.count;
+      pagination.total = result.count;
 
       var request = requestInfo.context.Request;
       var queryParams = request.Query;
@@ -111,6 +105,16 @@ namespace LnhpdApi.Models.LNHPD
 
       return response;
 
+    }
+
+    private int getPageSize(int count)
+    {
+      return count;
+    }
+
+    private int getPage(int page)
+    {
+      return page;
     }
 
     private string LnhpdDBConnection
