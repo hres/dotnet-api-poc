@@ -23,7 +23,7 @@ namespace LnhpdApi.Controller
     private readonly MedicinalIngredientContext _context = new MedicinalIngredientContext();
 
     [HttpGet("{id}")]
-    public ActionResult<Response<MedicinalIngredient>> GetMedicinalIngredientById(int id, string lang = "en")
+    public ActionResult<Response<MedicinalIngredient>> GetMedicinalIngredientById(int id, string lang)
     {
       Response<MedicinalIngredient> response = _context.GetMedicinalIngredientById(id, lang);
       if (response == null) return NotFound();
@@ -31,9 +31,9 @@ namespace LnhpdApi.Controller
     }
 
     [HttpGet]
-    public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int limit, int offset, int page, string lang = "en")
+    public ActionResult<Response<List<MedicinalIngredient>>> GetAllMedicinalIngredient(int pageSize, int page, string lang)
     {
-      return _context.GetAllMedicinalIngredient(new RequestInfo { limit = limit, offset = offset, page = page, context = HttpContext });
+      return _context.GetAllMedicinalIngredient(new RequestInfo { pageSize = pageSize, page = page, context = HttpContext });
     }
   }
 }
