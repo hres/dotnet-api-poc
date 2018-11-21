@@ -145,14 +145,12 @@ namespace LnhpdApi.Models.LNHPD
           // check for invalid page
           if (start >= count || page < 1)
           {
-            Console.WriteLine("INVALID PAGE");
             throw new Exception();
           }
 
           // shorten the limit if it's the last page
           if (start + limit > count)
           {
-            Console.WriteLine("LAST PAGE");
             limit = count - start;
           }
 

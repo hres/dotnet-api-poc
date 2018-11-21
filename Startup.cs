@@ -5,6 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using LnhpdApi.Models.Todo;
 using LnhpdApi.Models.LNHPD;
+using Newtonsoft.Json;
 
 namespace LnhpdApi
 {
@@ -16,6 +17,10 @@ namespace LnhpdApi
 
       services
       .AddMvc()
+      .AddJsonOptions(options =>
+      {
+        options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
+      })
       .AddXmlSerializerFormatters()
       .SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
