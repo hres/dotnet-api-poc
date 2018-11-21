@@ -1,7 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using System.Collections.Generic;
 using System.Linq;
-using LnhpdApi.Models.Todo;
 using LnhpdApi.Models.Response;
 using LnhpdApi.Models.MedicinalIngredient;
 using Oracle.ManagedDataAccess.Client;

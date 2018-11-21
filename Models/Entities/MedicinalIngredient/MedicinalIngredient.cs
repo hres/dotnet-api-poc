@@ -28,7 +28,6 @@ namespace LnhpdApi.Models.MedicinalIngredient
     public string source_material { get; set; }
     //public string brand_name { get; set; }
     // public Dictionary<string, string> languages { get; set; } = new Dictionary<string, string> { { "en", "alex" }, { "fr", "thing" } };
-    public MultilingualField<string> languages { get; set; } = new MultilingualField<string> { en = "alex", fr = "thing" };
   }
 
 

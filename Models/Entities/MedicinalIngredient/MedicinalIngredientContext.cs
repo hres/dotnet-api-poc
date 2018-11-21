@@ -11,15 +11,14 @@ namespace LnhpdApi.Models.MedicinalIngredient
 {
   public class MedicinalIngredientContext : AbstractRepository<MedicinalIngredient>
   {
-
-    public override IEnumerable<MedicinalIngredient> GetAll(int limit, int offset, int page, string lang)
+    public override IEnumerable<MedicinalIngredient> findAll(RequestInfo requestInfo)
     {
-      throw new System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
-    public override MedicinalIngredient GetOne(int id, string lang)
+    public override MedicinalIngredient findOne(RequestInfo requestInfo)
     {
-      throw new System.NotImplementedException();
+      throw new NotImplementedException();
     }
 
     public Response<MedicinalIngredient> GetMedicinalIngredientById(int id, string lang = "en")
@@ -35,17 +34,6 @@ namespace LnhpdApi.Models.MedicinalIngredient
     {
       return executeMany(requestInfo);
 
-    }
-
-
-    private int getPageSize(int count)
-    {
-      return count;
-    }
-
-    private int getPage(int page)
-    {
-      return page;
     }
 
     private string LnhpdDBConnection
@@ -321,6 +309,5 @@ namespace LnhpdApi.Models.MedicinalIngredient
       return item;
 
     }
-
   }
 }
