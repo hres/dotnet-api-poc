@@ -7,7 +7,7 @@ using LnhpdApi.Models.Response;
 using Microsoft.EntityFrameworkCore;
 using Oracle.ManagedDataAccess.Client;
 
-namespace LnhpdApi.Models.LNHPD
+namespace LnhpdApi.Models.MedicinalIngredient
 {
   public class MedicinalIngredientContext : AbstractRepository<MedicinalIngredient>
   {

@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
-namespace LnhpdApi.Models.LNHPD
+namespace LnhpdApi.Models.MedicinalIngredient
 {
   public class MedicinalIngredient
   {
@@ -28,7 +28,7 @@ namespace LnhpdApi.Models.LNHPD
     public string source_material { get; set; }
     //public string brand_name { get; set; }
     // public Dictionary<string, string> languages { get; set; } = new Dictionary<string, string> { { "en", "alex" }, { "fr", "thing" } };
-    public BilingualField<string> languages { get; set; } = new BilingualField<string> { en = "alex", fr = "thing" };
+    public MultilingualField<string> languages { get; set; } = new MultilingualField<string> { en = "alex", fr = "thing" };
   }
 
 

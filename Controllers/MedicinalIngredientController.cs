@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using LnhpdApi.Models.Todo;
 using LnhpdApi.Models.Response;
-using LnhpdApi.Models.LNHPD;
+using LnhpdApi.Models.MedicinalIngredient;
 using Oracle.ManagedDataAccess.Client;
 using System;
 using System.Data;

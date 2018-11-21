@@ -4,7 +4,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using LnhpdApi.Models.Todo;
-using LnhpdApi.Models.LNHPD;
 using Newtonsoft.Json;
 
 namespace LnhpdApi
