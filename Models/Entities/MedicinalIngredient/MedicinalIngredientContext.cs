@@ -111,6 +111,7 @@ namespace LnhpdApi.Models.MedicinalIngredient
           }
 
           // may want to move this to a incoming filter for speed
+          // TODO: definitely move this to filters
           var _limit = requestInfo.limit;
 
           if (_limit != null)
@@ -179,6 +180,8 @@ namespace LnhpdApi.Models.MedicinalIngredient
           pagination.limit = limit;
           pagination.page = page;
           pagination.total = count;
+          pagination.next = getNextPage(requestInfo, limit, page, count);
+          pagination.previous = getPreviousPage(requestInfo, limit, page, count);
 
           var request = requestInfo.context.Request;
           var queryParams = request.Query;
@@ -190,9 +193,7 @@ namespace LnhpdApi.Models.MedicinalIngredient
         }
         catch (Exception ex)
         {
-          string errorMessages = string.Format("DbConnection.cs - GetAllIngredient()");
           Console.WriteLine(ex.Message);
-          // ExceptionHelper.LogException(ex, errorMessages);
         }
         finally
         {
@@ -201,6 +202,30 @@ namespace LnhpdApi.Models.MedicinalIngredient
         }
       }
       return null;
+    }
+
+    private string getNextPage(RequestInfo requestInfo, int limit, int page, int count)
+    {
+      var next = buildBasePath(requestInfo);
+      // page indexing starts at 1
+      if ((page) * requestInfo.limit >= count) return null;
+      next += $"?limit={limit}&page={page + 1}";
+      return next;
+    }
+
+    private string getPreviousPage(RequestInfo requestInfo, int limit, int page, int count)
+    {
+      var previous = buildBasePath(requestInfo);
+      if (page <= 1) return null;
+      previous += $"?limit={limit}&page={page - 1}";
+
+      return previous;
+    }
+
+    private string buildBasePath(RequestInfo requestInfo)
+    {
+      var request = requestInfo.context.Request;
+      return $"{request.Scheme}://{request.Host}{request.Path}";
     }
 
     private (List<MedicinalIngredient> data, int count) executeMany(string query, string countQuery)
@@ -307,7 +332,6 @@ namespace LnhpdApi.Models.MedicinalIngredient
       item.extract_type_desc = reader["extract_type_desc"] == DBNull.Value ? string.Empty : reader["extract_type_desc"].ToString().Trim();
       item.source_material = reader["source_material"] == DBNull.Value ? string.Empty : reader["source_material"].ToString().Trim();
       return item;
-
     }
   }
 }
