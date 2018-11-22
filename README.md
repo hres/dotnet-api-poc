@@ -38,6 +38,7 @@ The APIs must:
   - if no language is specified, return all available languages
   - if one or more language is specified, return all available requested languages
   - if languages are specified but do not match any available languages, throw language error or return all available
+  - query parameter takes priority over headers
 - for datasets large enough to cause performance issues, allow for pagination mechanism or secure file transfer
 - allow for some form of querying, at a minimum with path parameters, optionally with a query DSL for query parameters and/or in a GET request body (needs to be define)
 - test the API
@@ -57,7 +58,7 @@ The APIs must:
 - if a request body is present, it will take precedence
 
 - `type` - `xml` or `json`, only required if API returns XML
-- `languages` - `en` or `fr` comma separated string of acceptable languages
+- `languages` - `en` and/or `fr` comma separated string of acceptable languages
 - `query` - object describing additional filter parameters using some DSL (optional)
 - `limit` - define page size for endpoints
 - `page` - define page number - for page-based processing such as with tables
