@@ -8,7 +8,7 @@ To create a simple, unified, extensible way to rapidly develop TBS API specifica
 
 The APIs must:
 
-- performance
+- be performant
   - use bandwidth sparingly
     - return JSON at a minimum, and XML only if there is a strong business case for it and defined in Accept header (optionally in 'type' query parameter)
   - short-circuit bad requests (invalid languages, media types, and/or pagination values)
