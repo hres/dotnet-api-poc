@@ -32,6 +32,7 @@ namespace LnhpdApi.Models.Request
 
     public string sort { get; set; }
 
+    public DateTime since { get; set; }
 
     public string[] languages { get; set; }
 

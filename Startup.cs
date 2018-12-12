@@ -5,6 +5,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using LnhpdApi.Models.Todo;
 using Newtonsoft.Json;
+using LnhpdApi.Filters;
+using LhnpdApi.Exceptions;
 
 namespace LnhpdApi
 {
@@ -15,7 +17,10 @@ namespace LnhpdApi
       services.AddDbContext<TodoContext>(opt => opt.UseInMemoryDatabase("TodoList"));
 
       services
-      .AddMvc()
+      .AddMvc(options =>
+      {
+        options.Filters.Add(typeof(PaginationFilter));
+      })
       .AddJsonOptions(options =>
       {
         options.SerializerSettings.NullValueHandling = NullValueHandling.Ignore;
@@ -38,6 +43,7 @@ namespace LnhpdApi
         c.SwaggerEndpoint("/swagger/v1/swagger.json", "My API V1");
         c.RoutePrefix = string.Empty;
       });
+      application.UseMiddleware(typeof(ExceptionMiddleware));
       application.UseMvc();
     }
   }
